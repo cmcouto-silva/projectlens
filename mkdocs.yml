@@ -1,6 +1,6 @@
 site_name: ProjectLens
 site_description: A tool for collecting and analyzing project files for LLM optimization
-site_url: https://cmcouto-silva.github.io/projectlens/
+site_url: https://projectlens.readthedocs.io/
 repo_url: https://github.com/cmcouto-silva/projectlens
 repo_name: cmcouto-silva/projectlens
 
@@ -43,25 +43,24 @@ markdown_extensions:
       alternate_style: true
   - admonition
   - pymdownx.details
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - attr_list
   - md_in_html
   - def_list
   - toc:
       permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 plugins:
   - search
   - mkdocstrings:
+      default_handler: python
       handlers:
         python:
           options:
             show_source: true
             docstring_style: google
-  - git-revision-date-localized:
-      enable_creation_date: true
 
 nav:
   - Home: index.md
@@ -91,7 +90,5 @@ extra:
       link: https://github.com/cmcouto-silva
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/projectlens/
-  version:
-    provider: mike
     
-copyright: Copyright &copy; 2024 Cainã Max Couto da Silva
+copyright: Copyright &copy; 2025 Cainã Max Couto da Silva
