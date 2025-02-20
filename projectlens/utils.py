@@ -7,6 +7,8 @@ Functions:
     bytes_to_kb: Convert bytes to kilobytes.
     kb_to_bytes: Convert kilobytes to bytes.
 """
+
+
 def bytes_to_kb(bytes_size: int) -> float:
     """Convert bytes to kilobytes.
 

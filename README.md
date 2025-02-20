@@ -1,5 +1,9 @@
 # ProjectLens 🔍
 
+![Tests](https://github.com/cmcouto-silva/projectlens/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/cmcouto-silva/projectlens/branch/main/graph/badge.svg)](https://codecov.io/gh/cmcouto-silva/projectlens)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A powerful tool for collecting and analyzing coding project files for review and optimization with Large Language Models (LLMs) like ChatGPT, Claude, DeepSeek, and other AI assistants.
 
 ## Overview

@@ -11,6 +11,7 @@ Example usage:
 Exported names:
     ProjectLens: The main ProjectLens class for scanning and exporting projects.
 """
+
 from projectlens.core import ProjectLens
 
 __version__ = "0.0.1"

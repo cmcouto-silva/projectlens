@@ -1,4 +1,4 @@
-"""""Core module for ProjectLens.
+"""Core module for ProjectLens.
 
 This module provides functionalities for scanning, analyzing, and exporting
 project file structures and contents based on specified configurations.
@@ -7,6 +7,7 @@ Classes:
     ProjectMetadata: Stores metadata related to scanned and skipped files.
     ProjectLens: Main class for scanning and exporting project file contents.
 """
+
 import logging
 import os
 from dataclasses import dataclass, field
@@ -24,6 +25,7 @@ logger.setLevel(logging.INFO)
 @dataclass
 class ProjectMetadata:
     """Stores metadata about scanned and skipped files during project analysis."""
+
     scanned_files: list[str] = field(default_factory=list)
     skipped_dirs: list[str] = field(default_factory=list)
     skipped_files: dict[str, list[str]] = field(
@@ -75,6 +77,7 @@ class ProjectMetadata:
             str:
                 A formatted tree-structure string representation of the scan results.
         """
+
         def format_file_list(
             files: list[str], indent: str = "", is_last: bool = False
         ) -> str:
@@ -132,6 +135,7 @@ class ProjectLens:
         max_file_size (Optional[Union[int, float]]): Max file size in KB.
         metadata (ProjectMetadata): Stores scanning metadata.
     """
+
     def __init__(
         self,
         extensions: Union[list[str], set[str]],
@@ -178,9 +182,8 @@ class ProjectLens:
 
     @staticmethod
     def _normalize_path(
-            project_path: Union[str, Path],
-            target_path: Union[str, Path]
-        ) -> str:
+        project_path: Union[str, Path], target_path: Union[str, Path]
+    ) -> str:
         target_path = Path(target_path)
         project_path = Path(project_path).resolve()
         return str(target_path.relative_to(project_path))
@@ -198,11 +201,11 @@ class ProjectLens:
         return False
 
     def _write(
-            self,
-            folder_path: Path,
-            file_contents: dict[str, str],
-            output_file : Optional[str]=None
-        ) -> None:
+        self,
+        folder_path: Path,
+        file_contents: dict[str, str],
+        output_file: Optional[str] = None,
+    ) -> None:
         """Write scanned file contents to an output file.
 
         Args:
@@ -248,7 +251,7 @@ class ProjectLens:
         self,
         path: Union[str, Path],
         exclude: Optional[set[str]] = None,
-        prefix: str = ""
+        prefix: str = "",
     ) -> str:
         """Generate a tree-like representation of the directory structure.
 
@@ -286,10 +289,8 @@ class ProjectLens:
         return "\n".join(filter(None, tree))
 
     def export_project(
-            self,
-            folder_path: Union[str, Path],
-            output: Optional[str] = None
-        ) -> None:
+        self, folder_path: Union[str, Path], output: Optional[str] = None
+    ) -> None:
         """Scan and export project files to an output file.
 
         Args:

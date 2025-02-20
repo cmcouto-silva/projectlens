@@ -22,6 +22,7 @@ Example:
     Enabling debugging details:
         $ projectlens . -x py yml -e data tests --verbose
 """
+
 import argparse
 import logging
 import sys
