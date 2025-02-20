@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "projectlens"
-version = "0.0.1"
+version = "0.1.0"
 description = "A tool for collecting and analyzing Python project files for LLM optimization"
 readme = "README.md"
 requires-python = ">=3.9"
