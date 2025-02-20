@@ -7,6 +7,7 @@ Exported names:
     load_ignore_patterns: Function to load file patterns to ignore (like .gitignore).
     logger: Pre-configured logger instance for the projectlens package.
 """
+
 from projectlens.configs.config import load_ignore_patterns, logger
 
 __all__ = ["load_ignore_patterns", "logger"]

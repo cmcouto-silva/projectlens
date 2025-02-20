@@ -18,6 +18,7 @@ Example test groups:
 To run the tests, simply invoke pytest from the project root:
     $ pytest -vv
 """
+
 import os
 import tempfile
 from collections.abc import Generator
@@ -85,9 +86,8 @@ def output_file() -> Generator[str, None, None]:
 
 
 def test_basic_extension_filtering(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test basic file filtering by extension."""
     lens = ProjectLens(extensions=["py"])
     lens.export_project(test_project_structure, output_file)
@@ -128,10 +128,7 @@ def test_multiple_extensions(test_project_structure: Path, output_file: str) -> 
 
 def test_include_specific_files(test_project_structure: Path, output_file: str) -> None:
     """Test including specific files regardless of extension."""
-    lens = ProjectLens(
-        extensions=["py"],
-        include=["Dockerfile", "requirements.txt"]
-    )
+    lens = ProjectLens(extensions=["py"], include=["Dockerfile", "requirements.txt"])
     lens.export_project(test_project_structure, output_file)
 
     # Check that specified includes are present
@@ -147,10 +144,7 @@ def test_include_specific_files(test_project_structure: Path, output_file: str) 
 
 def test_exclude_patterns(test_project_structure: Path, output_file: str) -> None:
     """Test excluding files and directories by pattern."""
-    lens = ProjectLens(
-        extensions=["py", "md"],
-        exclude=["tests", "*.txt"]
-    )
+    lens = ProjectLens(extensions=["py", "md"], exclude=["tests", "*.txt"])
     lens.export_project(test_project_structure, output_file)
 
     # Verify test files are excluded
@@ -166,14 +160,13 @@ def test_exclude_patterns(test_project_structure: Path, output_file: str) -> Non
 
 
 def test_include_vs_exclude_priority(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test that exclude patterns take priority over includes."""
     lens = ProjectLens(
         extensions=["py"],
         include=["requirements.txt", "README.md"],
-        exclude=["*.txt", "*.md"]
+        exclude=["*.txt", "*.md"],
     )
     lens.export_project(test_project_structure, output_file)
 
@@ -189,7 +182,7 @@ def test_max_file_size(test_project_structure: Path, output_file: str) -> None:
     """Test max file size filtering."""
     lens = ProjectLens(
         extensions=["py", "bin"],
-        max_file_size=10  # 10KB max
+        max_file_size=10,  # 10KB max
     )
     lens.export_project(test_project_structure, output_file)
 
@@ -211,13 +204,11 @@ def test_normalize_extensions() -> None:
 
 
 def test_default_directory_exclusions(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test that common directories are excluded by default."""
     lens = ProjectLens(
-        extensions=["py", "pyc"],
-        exclude=["__pycache__", ".git", ".vscode"]
+        extensions=["py", "pyc"], exclude=["__pycache__", ".git", ".vscode"]
     )
     lens.export_project(test_project_structure, output_file)
 
@@ -293,10 +284,8 @@ def test_dot_in_extensions_parameter() -> None:
 
 
 def test_skipped_files_logging(
-        test_project_structure: Path,
-        output_file: str,
-        monkeypatch: pytest.MonkeyPatch
-    ) -> None:
+    test_project_structure: Path, output_file: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
     """Test that skipped files are properly logged."""
     log_messages = []
 
@@ -320,11 +309,7 @@ def test_skipped_files_logging(
     mock_logger = MockLogger()
     monkeypatch.setattr("projectlens.core.logger", mock_logger)
 
-    lens = ProjectLens(
-        extensions=["py"],
-        exclude=["tests", "*.txt"],
-        max_file_size=10
-    )
+    lens = ProjectLens(extensions=["py"], exclude=["tests", "*.txt"], max_file_size=10)
     lens.export_project(test_project_structure, output_file)
 
     # Check if any debug messages contain "Skipping"
@@ -344,16 +329,14 @@ def test_empty_extensions_error() -> None:
 
 def test_wildcard_exclusion(test_project_structure: Path, output_file: str) -> None:
     """Test wildcard pattern exclusion."""
-    lens = ProjectLens(
-        extensions=["py", "md"],
-        exclude=["test*", "*cache*"]
-    )
+    lens = ProjectLens(extensions=["py", "md"], exclude=["test*", "*cache*"])
     lens.export_project(test_project_structure, output_file)
 
     # All test* files/directories should be excluded or in skipped_files
     test_files = [f for f in lens.metadata.scanned_files if "test" in f.lower()]
     pattern_matched = [
-        f for f in lens.metadata.skipped_files["pattern_matching"]
+        f
+        for f in lens.metadata.skipped_files["pattern_matching"]
         if "test" in f.lower()
     ]
 
@@ -372,9 +355,8 @@ def test_wildcard_exclusion(test_project_structure: Path, output_file: str) -> N
 
 
 def test_extensions_with_dots_in_cli(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test handling extensions specified with dots."""
     lens = ProjectLens(extensions=[".py", ".md", ".toml"])
     lens.export_project(test_project_structure, output_file)
@@ -385,13 +367,12 @@ def test_extensions_with_dots_in_cli(
 
 
 def test_complex_exclusion_patterns(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test complex exclusion patterns."""
     lens = ProjectLens(
         extensions=["py", "md", "toml"],
-        exclude=["tests", "*.csv"]  # Simplified exclusion patterns
+        exclude=["tests", "*.csv"],  # Simplified exclusion patterns
     )
     lens.export_project(test_project_structure, output_file)
 
@@ -414,13 +395,12 @@ def test_complex_exclusion_patterns(
 
 
 def test_nested_include_patterns(
-        test_project_structure: Path,
-        output_file: str
-    ) -> None:
+    test_project_structure: Path, output_file: str
+) -> None:
     """Test including nested files."""
     lens = ProjectLens(
         extensions=["yaml"],
-        include=["config.yaml"]  # Simplified - looking for any config.yaml
+        include=["config.yaml"],  # Simplified - looking for any config.yaml
     )
     lens.export_project(test_project_structure, output_file)
 

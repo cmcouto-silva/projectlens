@@ -8,6 +8,7 @@ Functions:
     load_ignore_patterns: Load ignore patterns from .projectignore files.
     success: Custom logging method for SUCCESS-level messages.
 """
+
 import logging
 from importlib import resources
 from pathlib import Path
@@ -19,11 +20,13 @@ import projectlens.configs
 SUCCESS = 25
 logging.addLevelName(SUCCESS, "SUCCESS")
 
+
 def success(
-        self: logging.Logger, message: object, *args: object, **kwargs: object
-    ) -> None:
+    self: logging.Logger, message: object, *args: object, **kwargs: object
+) -> None:
     """Log a message with the custom SUCCESS level."""
     self.log(SUCCESS, message, *args, **kwargs)
+
 
 logging.Logger.success = success
 
@@ -61,9 +64,8 @@ def load_ignore_patterns(ignore_file: Optional[Union[str, Path]] = None) -> set[
 
         # Fallback to default `.projectignore` in projectlens/configs/
         if ignore_path is None:
-            ignore_path = (
-                resources.files(projectlens.configs)
-                .joinpath(".projectignore")
+            ignore_path = resources.files(projectlens.configs).joinpath(
+                ".projectignore"
             )
 
     # Load patterns if the file exists
