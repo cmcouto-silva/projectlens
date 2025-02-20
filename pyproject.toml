@@ -1,0 +1,86 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "projectlens"
+version = "0.0.1"
+description = "A tool for collecting and analyzing Python project files for LLM optimization"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = ["project", "development", "code", "llm", "ai"]
+authors = [
+    { name = "Cainã Max Couto da Silva", email = "cmcouto.silva@gmail.com" }
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/cmcouto-silva/projectlens"
+Documentation = "https://projectlens.readthedocs.io"
+Donate = "https://buymeacoffee.com/cmcoutosilva"
+Issues = "https://github.com/cmcouto-silva/projectlens/issues"
+
+[project.scripts]
+projectlens = "projectlens.cli:main"
+
+[tool.hatch.build]
+packages = ["projectlens"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "ruff>=0.9.6",
+]
+docs = [
+    "mkdocs-material>=9.6.5",
+    "mkdocstrings-python>=1.16.1",
+    "mkdocstrings>=0.28.1",
+]
+
+[tool.ruff]
+# Same as Black.
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "F", "E", "W", "I", "N", "Q", "UP", "D",
+    "RUF", "B", "C", "D103", "T20","SIM", "ANN"
+]
+ignore = ["C901"]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-single-line = false
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
