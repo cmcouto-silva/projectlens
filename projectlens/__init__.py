@@ -12,8 +12,10 @@ Exported names:
     ProjectLens: The main ProjectLens class for scanning and exporting projects.
 """
 
+from importlib.metadata import version
+
 from projectlens.core import ProjectLens
 
-__version__ = "0.1.0"
+__version__ = version("projectlens")
 
-__all__ = [ProjectLens]
+__all__ = ["ProjectLens"]
