@@ -74,7 +74,7 @@ def load_ignore_patterns(ignore_file: Optional[Union[str, Path]] = None) -> set[
             for line in f:
                 line = line.strip()
                 if line and not line.startswith("#"):  # Ignore comments
-                    ignore_patterns.add(line)
+                    ignore_patterns.add(line.strip("/"))
     except Exception:
         raise
 
