@@ -37,13 +37,16 @@ def main() -> int:
         description="Export project files for LLM analysis."
     )
 
-    parser.add_argument("folder_path", help="Path to the project directory")
+    parser.add_argument(
+        "--version", action="store_true", help="Show version information and exit"
+    )
+
+    parser.add_argument("folder_path", help="Path to the project directory", nargs="?")
 
     parser.add_argument(
         "-x",
         "--extensions",
         nargs="+",
-        required=True,
         help="File extensions to include (e.g., py toml yml)",
     )
 
@@ -74,6 +77,21 @@ def main() -> int:
     parser.add_argument("--verbose", action="store_true", help="Enable debug details")
 
     args = parser.parse_args()
+
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+
+    if args.version:
+        from projectlens import __version__
+
+        sys.stdout.write(f"ProjectLens version {__version__}\n")
+        return 0
+
+    if not args.folder_path:
+        parser.error("the following arguments are required: folder_path")
+
+    if not args.extensions:
+        parser.error("the following arguments are required: -x/--extensions")
 
     if args.verbose:
         logger.setLevel(logging.DEBUG)

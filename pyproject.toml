@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "projectlens"
-version = "0.1.1"
+version = "0.1.2"
 description = "A tool for collecting and analyzing Python project files for LLM optimization"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -58,7 +58,7 @@ indent-width = 4
 [tool.ruff.lint]
 select = [
     "F", "E", "W", "I", "N", "Q", "UP", "D",
-    "RUF", "B", "C", "D103", "T20","SIM", "ANN"
+    "RUF", "B", "C90", "T20","SIM", "TID", "ANN"
 ]
 ignore = ["C901"]
 
