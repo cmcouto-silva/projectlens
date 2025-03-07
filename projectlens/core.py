@@ -270,18 +270,23 @@ class ProjectLens:
         exclude = exclude or set()
 
         tree = []
-        entries = sorted(path.iterdir(), key=lambda x: (x.is_file(), x.name))
+        # Get all entries first
+        all_entries = sorted(path.iterdir(), key=lambda x: (x.is_file(), x.name))
 
-        for i, entry in enumerate(entries):
-            is_last = i == len(entries) - 1
+        # Filter out entries that should be excluded before processing
+        filtered_entries = []
+        for entry in all_entries:
+            if not self._should_ignore(str(entry), exclude, verbose=False):
+                filtered_entries.append(entry)
+
+        # Now process only the filtered entries
+        for i, entry in enumerate(filtered_entries):
+            is_last = i == len(filtered_entries) - 1
             node = "└──" if is_last else "├──"
-            if entry.is_file() and not self._should_ignore(
-                str(entry), exclude, verbose=False
-            ):
+
+            if entry.is_file():
                 tree.append(f"{prefix}{node} {entry.name}")
-            elif entry.is_dir() and not self._should_ignore(
-                str(entry), exclude, verbose=False
-            ):
+            elif entry.is_dir():
                 tree.append(f"{prefix}{node} {entry.name}")
                 next_prefix = f"{prefix}{'    ' if is_last else '│   '}"
                 tree.append(self.generate_tree(entry, exclude, next_prefix))
@@ -305,6 +310,8 @@ class ProjectLens:
         if output is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M")
             output = f"{folder_path.name}_{timestamp}.txt"
+
+        self.exclude.add(output)
 
         logger.debug(
             "Included file extensions: "
